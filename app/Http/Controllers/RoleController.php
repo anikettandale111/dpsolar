@@ -29,12 +29,7 @@ class RoleController extends Controller
     public function create(): View
     {   
         return view('roles.create', [
-<<<<<<< HEAD
             'permissions' => Permission::get()
-=======
-            'roles' => Permission::get(),
-            'permissions'=>Permission::get()
->>>>>>> e9c86bec46221be68b9eaceb2a158981149f1e5b
         ]);
     }
 

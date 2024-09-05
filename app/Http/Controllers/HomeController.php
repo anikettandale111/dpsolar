@@ -10,7 +10,6 @@ use App\Models\Product;
 
 class HomeController extends Controller
 {
-<<<<<<< HEAD
     /**
      * Create a new controller instance.
      *
@@ -20,8 +19,6 @@ class HomeController extends Controller
     {
         $this->middleware('auth')->except('frontend','contact');
     }
-=======
->>>>>>> e9c86bec46221be68b9eaceb2a158981149f1e5b
 
     /**
      * Show the application dashboard.
