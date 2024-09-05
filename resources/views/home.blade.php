@@ -1,7 +1,6 @@
 @extends('layouts.back')
 @section('title', 'Dashboard')
 @section('content')
-<<<<<<< HEAD
 <div class="container-fluid mt-3">
     <div class="row">
         <div class="col-lg-3 col-sm-6">
@@ -11,24 +10,6 @@
                     <div class="d-inline-block">
                         <h2 class="text-white">4565</h2>
                         <p class="text-white mb-0">Jan - March 2019</p>
-=======
-<section class="section">
-    <div class="section-header">
-      <h1>Dashboard</h1>
-      <div class="section-header-breadcrumb">
-        <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
-      </div>
-    </div>
-    <div class="section-body">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4></h4>
-                        <div class="card-header-form">
-
-                        </div>
->>>>>>> e9c86bec46221be68b9eaceb2a158981149f1e5b
                     </div>
                     <span class="float-right display-5 opacity-5"><i class="fa fa-shopping-cart"></i></span>
                 </div>

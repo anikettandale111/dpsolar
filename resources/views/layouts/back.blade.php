@@ -27,7 +27,6 @@
       </svg>
     </div>
   </div>
-<<<<<<< HEAD
   <div id="main-wrapper">
     <div class="nav-header">
       <div class="brand-logo">
@@ -43,7 +42,7 @@
     @include('inc.topbar')
     @include('inc.sidebar')
     <div class="content-body">
-    @yield('content')
+      @yield('content')
     </div>
     <div class="footer">
       <div class="copyright">
@@ -74,64 +73,6 @@
   <script src="{{ asset('backend/assets/plugins/chartist/js/chartist.min.js')}}"></script>
   <script src="{{ asset('backend/assets/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js')}}"></script>
   <script src="{{ asset('backend/assets/js/dashboard/dashboard-1.js')}}"></script>
-=======
-
-  <!-- General JS Scripts -->
-  <script src="{{ asset('backend/assets/modules/jquery.min.js')}}"></script>
-  <script src="{{ asset('backend/assets/modules/popper.js')}}"></script>
-  <script src="{{ asset('backend/assets/modules/tooltip.js')}}"></script>
-  <script src="{{ asset('backend/assets/modules/bootstrap/js/bootstrap.min.js')}}"></script>
-  <script src="{{ asset('backend/assets/modules/nicescroll/jquery.nicescroll.min.js')}}"></script>
-  <script src="{{ asset('backend/assets/modules/moment.min.js')}}"></script>
-  <script src="{{ asset('backend/assets/js/stisla.js')}}"></script>
-  <script src="{{ asset('backend/assets/modules/sweetalert/sweetalert.min.js')}}"></script>
-
-  <!-- JS Libraies -->
-  <script src="{{ asset('assets/modules/jquery.sparkline.min.js')}}"></script>
-  <script src="{{ asset('assets/modules/chart.min.js')}}"></script>
-  <script src="{{ asset('assets/modules/owlcarousel2/dist/owl.carousel.min.js')}}"></script>
-  <script src="{{ asset('assets/modules/summernote/summernote-bs4.js')}}"></script>
-  <script src="{{ asset('assets/modules/chocolat/dist/js/jquery.chocolat.min.js')}}"></script>
-  <!-- Page Specific JS File -->
-
-  <!-- Template JS File -->
-  <script src="{{ asset('backend/assets/js/scripts.js')}}"></script>
-  <script src="{{ asset('backend/assets/js/custom.js')}}"></script>
-  <script>
-    @if (session('success'))
-        swal("Success!", "{{ session('success') }}", "success");
-    @endif
-    @if (session('error'))
-        swal("Error!", "{{ session('error') }}", "error");
-    @endif
-  </script>
-   <script src="{{ asset('backend/assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
-   <script>
-       $(document).ready(function() {
-           const addSelectAll = matches => {
-               if (matches.length > 0) {
-               // Insert a special "Select all matches" item at the start of the
-               // list of matched items.
-               return [
-                   {id: 'selectAll', text: 'Select all matches', matchIds: matches.map(match => match.id)},
-                   ...matches
-               ];
-               }
-           };
-           const handleSelection = event => {
-               if (event.params.data.id === 'selectAll') {
-               $('.select2').val(event.params.data.matchIds);
-               $('.select2').trigger('change');
-               };
-           };
-           $('.select2').select2({
-               multiple: true,
-               sorter: addSelectAll,
-           });
-           $('.select2').on('select2:select', handleSelection);
-       });
-   </script>
->>>>>>> e9c86bec46221be68b9eaceb2a158981149f1e5b
   @stack('scripts')
 </body>
 
