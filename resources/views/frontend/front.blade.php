@@ -45,7 +45,8 @@ use App\Helpers\DeviceHelper;
       padding-right: 3px;
       line-height: 35px;
     }
-    .account_selection{
+
+    .account_selection {
       width: 130px !important;
     }
 
@@ -182,7 +183,13 @@ use App\Helpers\DeviceHelper;
     }
 
     .titleTextColor {
-      color: {{$colroarray[rand(0, 4)]}} !important
+      color: {
+          {
+          $colroarray[rand(0, 4)]
+        }
+      }
+
+      !important
     }
 
     .payment-info {
@@ -407,17 +414,30 @@ use App\Helpers\DeviceHelper;
         margin-top: 100px !important
       }
     }
-    .add_to_cart_button{
-        color: white;
-        text-transform: uppercase;
-        visibility: visible !important;
-        opacity: 2 !important;
+
+    .add_to_cart_button {
+      color: white;
+      text-transform: uppercase;
+      visibility: visible !important;
+      opacity: 2 !important;
     }
-    .product_filter{background: white;}
-    .product-item{padding: 5px 5px 0px 0px;}
-    .product_name{text-transform: uppercase;}
-    .red_button{top:-20px;}
-</style>
+
+    .product_filter {
+      background: white;
+    }
+
+    .product-item {
+      padding: 5px 5px 0px 0px;
+    }
+
+    .product_name {
+      text-transform: uppercase;
+    }
+
+    .red_button {
+      top: -20px;
+    }
+  </style>
   <script>
     var currency = "{{ config('app.currency') }}";
   </script>
@@ -726,7 +746,7 @@ use App\Helpers\DeviceHelper;
         </div>
     </footer>
   </div>
-    <script src="{{ asset('frontend/js/jquery-3.2.1.min.js')}}"></script>
+  <script src="{{ asset('frontend/js/jquery-3.2.1.min.js')}}"></script>
   <script src="{{ asset('frontend/styles/bootstrap4/popper.js')}}"></script>
   <script src="{{ asset('frontend/styles/bootstrap4/bootstrap.min.js')}}"></script>
   <script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
