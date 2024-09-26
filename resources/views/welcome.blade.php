@@ -1,8 +1,8 @@
 @extends('frontend.front')
 <style>
     .product_name {
-    margin-top: 10px !important;
-}
+        margin-top: 10px !important;
+    }
 </style>
 @section('title', 'DPS')
 @section('content')
@@ -31,13 +31,16 @@
         <div class="row">
             @if(isset($category) && count($category))
             @foreach($category AS $key => $cat)
-                <div class="col-md-4">
-                    <div class="banner_item align-items-center" style="background-image:url('{{url(Storage::url($cat->cat_image))}}')">
-                        <div class="banner_category">
-                            <a href="javascript:void(0)" class="titleTextColor">{{$cat->category_name}}</a>
-                        </div>
+            @php
+            $hashedId = App\Helpers\DeviceHelper::generateHash($cat->id);
+            @endphp
+            <div class="col-md-4">
+                <div class="banner_item align-items-center" style="background-image:url('{{url(Storage::url($cat->cat_image))}}')">
+                    <div class="banner_category">
+                        <a href="{{URL('/category/'.$hashedId)}}" class="titleTextColor">{{$cat->category_name}}</a>
                     </div>
                 </div>
+            </div>
             @endforeach
             @endif
         </div>
@@ -62,23 +65,23 @@
                     <ul class="arrivals_grid_sorting clearfix button-group filters-button-group">
                         <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked" data-filter="*">all</li>
                         @foreach($category AS $key => $cat)
-                            <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".{{strtolower(str_replace(' ','-',$cat->category_name))}}">{{$cat->category_name}}</li>
+                        <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".{{strtolower(str_replace(' ','-',$cat->category_name))}}">{{$cat->category_name}}</li>
                         @endforeach
-                            </ul>
-                        </div>
-                    </div>
+                    </ul>
                 </div>
+            </div>
+        </div>
         @endif
         <div class="row">
             <div class="col">
                 <div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
                     <!-- Product 1 -->
                     @if(isset($product) && count($product))
-                        @foreach($product AS $key => $prod)
-                        @php 
-                            $hashedId = App\Helpers\DeviceHelper::generateHash($prod->pid);
-                        @endphp
-                        <a href="{{URL('/products/'.$hashedId)}}">
+                    @foreach($product AS $key => $prod)
+                    @php
+                    $hashedId = App\Helpers\DeviceHelper::generateHash($prod->pid);
+                    @endphp
+                    <a href="{{URL('/products/'.$hashedId)}}">
                         <div class="product-item mobile-style {{strtolower(str_replace(' ','-',$prod->category_name))}}">
                             <div class="product discount product_filter">
                                 <div class="product_image">
@@ -93,8 +96,8 @@
                             </div>
                             <div class="red_button add_to_cart_button">add to cart</div>
                         </div>
-                        </a>
-                        @endforeach
+                    </a>
+                    @endforeach
                     @endif
                 </div>
             </div>
@@ -158,10 +161,10 @@
                 <div class="product_slider_container">
                     <div class="owl-carousel owl-theme product_slider">
 
-                    <!-- Slide 1 -->
-                    @if(isset($product) && count($product))
+                        <!-- Slide 1 -->
+                        @if(isset($product) && count($product))
                         @foreach($product AS $key => $prod)
-                        @php 
+                        @php
                         $hashedId = App\Helpers\DeviceHelper::generateHash($prod->pid);
                         @endphp
                         <div class="owl-item product_slider_item {{strtolower(str_replace(' ','-',$prod->category_name))}}">
@@ -181,7 +184,7 @@
                             </div>
                         </div>
                         @endforeach
-                    @endif
+                        @endif
                     </div>
                     <!-- Slider Navigation -->
                     <div class="product_slider_nav_left product_slider_nav d-flex align-items-center justify-content-center flex-column">

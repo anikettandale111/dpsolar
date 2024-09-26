@@ -11,8 +11,8 @@
 <div class="banner">
     <div class="container">
         <div class="row">
-            @if(isset($category) && count($category))
-            @foreach($category AS $key => $cat)
+            @if(isset($categorylist) && count($categorylist))
+            @foreach($categorylist AS $key => $cat)
             @php
             $hashedId = App\Helpers\DeviceHelper::generateHash($cat->id);
             @endphp
@@ -34,24 +34,28 @@
         <div class="row">
             <div class="col text-center">
                 <div class="section_title new_arrivals_title">
-                    <h2>New Arrivals</h2>
+                    <h2>{{$category}}</h2>
                 </div>
             </div>
         </div>
-        @if(isset($category) && count($category))
+        @if(isset($categorylist) && count($categorylist))
         <div class="row align-items-center">
             <div class="col text-center">
                 <div class="new_arrivals_sorting">
                     <ul class="arrivals_grid_sorting clearfix button-group filters-button-group">
-                        <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked" data-filter="*">all</li>
-                        @foreach($category AS $key => $cat)
-                        <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".{{strtolower(str_replace(' ','-',$cat->category_name))}}">{{$cat->category_name}}</li>
+                        <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center is-checked" data-filter="*">all</li>
+                        @foreach($categorylist AS $key => $cat)
+                        @php $active = ($category == $cat->category_name)?'active':'' @endphp
+                        <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center {{$active}}" data-filter=".{{strtolower(str_replace(' ','-',$cat->category_name))}}">{{$cat->category_name}}</li>
                         @endforeach
                     </ul>
                 </div>
             </div>
         </div>
         @endif
+        @php
+        // print_r($product);die();
+        @endphp
         <div class="row">
             <div class="col">
                 <div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>

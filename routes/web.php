@@ -48,6 +48,7 @@ Route::get('verifyotp', [App\Http\Controllers\CustomerController::class, 'verify
 
 Route::get('/contact', [App\Http\Controllers\HomeController::class, 'contact'])->name('contact');
 Route::get('/productlist', [App\Http\Controllers\ProductController::class, 'productlist'])->name('productlist');
+Route::get('/category/{id?}', [App\Http\Controllers\ProductController::class, 'productlist'])->name('category');
 Route::get('/categorylist', [App\Http\Controllers\CategoryController::class, 'categorylist'])->name('categorylist');
 
 Auth::routes();

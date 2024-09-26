@@ -23,7 +23,7 @@ class ProductController extends Controller
      */
 
     public function __construct()
-    {
+    {   
         $this->middleware('auth')->except(['show', 'productlist']);
     }
 
@@ -146,7 +146,7 @@ class ProductController extends Controller
         return redirect()->route('products.index')->withSuccess('Product deleted successfully.');
     }
 
-    public function productlist()
+    public function productlist($cateid='')
     {
     //     $post = [
     //         'api_id' => 'APISDzNobqM134172',
@@ -172,15 +172,32 @@ class ProductController extends Controller
     // $result = curl_exec($ch);
     // echo $result;
     // dd();
-        return view('frontend.productlist', [
-            'product' => Product::join('categories', 'categories.id', '=', 'products.cat_id')
-                ->join('subcategories', 'subcategories.sid', '=', 'products.sub_cat_id')
-                ->select('categories.category_name', 'subcategories.sub_cat_name', 'products.*')
-                ->orderBy('pid')
-                ->get(),
-            'category' => Category::where(['is_delete' => 0, 'is_active' => 1])
-                ->orderBy('id')
-                ->get()
-        ]);
+        if(isset($cateid) && $cateid !=''){
+            $catid = explode(config('app.id_seperator'), $cateid)[0];
+            return view('frontend.catproductlist', [
+                'product' => Product::join('categories', 'categories.id', '=', 'products.cat_id')
+                    ->join('subcategories', 'subcategories.sid', '=', 'products.sub_cat_id')
+                    ->select('categories.category_name', 'subcategories.sub_cat_name', 'products.*')
+                    ->where('products.cat_id',$catid)
+                    ->orderBy('pid')
+                    ->get(),
+                'category' => Category::where(['id' => $catid])
+                    ->first()->category_name,
+                'categorylist' => Category::where(['is_delete' => 0, 'is_active' => 1])
+                    ->orderBy('id')
+                    ->get()
+            ]);
+        }else{
+            return view('frontend.productlist', [
+                'product' => Product::join('categories', 'categories.id', '=', 'products.cat_id')
+                    ->join('subcategories', 'subcategories.sid', '=', 'products.sub_cat_id')
+                    ->select('categories.category_name', 'subcategories.sub_cat_name', 'products.*')
+                    ->orderBy('pid')
+                    ->get(),
+                'category' => Category::where(['is_delete' => 0, 'is_active' => 1])
+                    ->orderBy('id')
+                    ->get()
+            ]);
+        }
     }
 }
