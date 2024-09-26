@@ -28,7 +28,7 @@
                   <span class="invalid-feedback error"></span>
                 </div>
                 <div class="form-group col-6">
-                  <label for="last_name">First Name<span class="required">*</span></label>
+                  <label for="last_name">Last Name<span class="required">*</span></label>
                   <input id="last_name" type="text" class="form-control" name="last_name" value="{{old('last_name')}}" autofocus required autocomplete="off">
                   <span class="invalid-feedback error"></span>
                 </div>

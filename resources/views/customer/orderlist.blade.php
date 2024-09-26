@@ -10,7 +10,7 @@ $grandtot=0.00;
         <div class="row">
             <div class="col text-center">
                 <div class="section_title new_arrivals_title">
-                    <h2 class="mb-0">Manage Address</h2>
+                    <h2 class="mb-0">My Orders</h2>
                     <hr>
                 </div>
             </div>
@@ -19,12 +19,13 @@ $grandtot=0.00;
             <div class="row no-gutters">
                 <div class="col-md-12">
                     <div class="product-details">
-                        <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#exampleModalCenter">Add Address</button>
                         <table id="example" class="table table-striped" style="width:100%;margin-top:45px;">
                             <thead>
                                 <tr>
                                     <th>Sr.No.</th>
-                                    <th>Address</th>
+                                    <th>Order</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -120,14 +121,22 @@ $grandtot=0.00;
             // bFilter: true,
             // bInfo: false,
             // bAutoWidth: false,
-            ajax: APP_URL + "/customer/addresslist",
+            ajax: APP_URL + "/customer/orders",
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex'
                 },
                 {
-                    data: 'addressstr',
-                    name: 'Category Name'
+                    data: 'order_id',
+                    name: 'Order ID'
+                },
+                {
+                    data: 'orderdate',
+                    name: 'Date'
+                },
+                {
+                    data: 'orderstatus',
+                    name: 'Status'
                 },
                 {
                     data: 'action',
@@ -135,92 +144,6 @@ $grandtot=0.00;
                 }
             ]
         });
-
-        $('#address_submit').on('click', function(event) {
-            event.preventDefault(); // Prevent the default form submission
-            if ($('#address_one').val().trim() === '') {
-                $('.address_one.error').text('Address Line One is required');
-                return false;
-            }
-            if ($('#address_two').val().trim() === '') {
-                $('.address_two.error').text('Address Line Two is required');
-                return false;
-            }
-            if ($('#address_three').val().trim() === '') {
-                $('.address_three.error').text('Landmark is required');
-                return false;
-            }
-            if ($('#address_state').val().trim() === '') {
-                $('.address_state.error').text('State is required');
-                return false;
-            }
-            if ($('#address_city').val().trim() === '') {
-                $('.address_city.error').text('City is required');
-                return false;
-            }
-            // Validate the pincode (only numbers, 6 digits)
-            var pincode = $('#address_pincode').val();
-            if (!/^\d{6}$/.test(pincode)) {
-                $('.address_pincode.error').text('Pincode must be 6 digits.');
-                return;
-            } else {
-                $('.address_pincode.error').text('');
-            }
-            var formData = $('#address').serialize(); // Serialize the form data
-            $.ajax({
-                url: APP_URL + '/customer/addressadd', // Replace with your form action URL
-                type: 'POST',
-                data: formData,
-                success: function(response) {
-                    if (response.status == '200') {
-                        toastr.success(response.message);
-                        $('#address')[0].reset(); // Reset all form fields
-                        $('.error').text(''); // Clear any error messages
-                        $('#exampleModalCenter').modal('toggle');
-                        categoryTable.ajax.reload();
-                    } else {}
-                }
-            });
-        });
     });
-
-    function editRecord(addid) {
-        $('#address')[0].reset(); // Reset all form fields
-        $('.error').text(''); // Clear any error messages
-        // var addid = $(this).data('address');
-        $.ajax({
-            url: APP_URL + '/customer/addressget/' + addid, // Replace with your form action URL
-            type: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                $('#aid').val(response.aid);
-                $('#address_one').val(response.address_one);
-                $('#address_two').val(response.address_two);
-                $('#address_three').val(response.address_three);
-                $('#address_state').val(response.state);
-                $('#address_city').val(response.city);
-                $('#address_pincode').val(response.pincode);
-            }
-        });
-    }
-
-    function deleteRecord(addid) {
-        if (!confirm('Are you sure?')) return false;
-        $('#address')[0].reset(); // Reset all form fields
-        $('.error').text(''); // Clear any error messages
-        // var addid = $(this).data('address');
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url: APP_URL + '/customer/addressdelete/' + addid, // Replace with your form action URL
-            type: 'DELETE',
-            dataType: 'json',
-            success: function(response) {
-                toastr.success(response.message);
-                categoryTable.ajax.reload();
-            }
-        });
-    }
 </script>
 @endpush

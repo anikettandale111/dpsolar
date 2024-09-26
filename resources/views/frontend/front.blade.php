@@ -519,7 +519,8 @@ use App\Helpers\DeviceHelper;
                     </a>
                     <ul class="account_selection">
                       <li><a href="{{url('/customer/address')}}">My-Address</a></li>
-                      <li><a href="{{url('/customer/profile')}}">Profile</a></li>
+                      <li><a href="{{url('/customer/address')}}">My-Address</a></li>
+                      <!-- <li><a href="{{url('/customer/profile')}}">Profile</a></li> -->
                       <li>
                         <form action="{{ route('logout') }}" method="POST">
                           @csrf
