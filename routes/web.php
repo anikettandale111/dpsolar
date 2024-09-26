@@ -35,6 +35,8 @@ Route::middleware('auth:customer')->post('cart/checkout', [App\Http\Controllers\
 Route::middleware('auth:customer')->get('cart/complete', [App\Http\Controllers\CartController::class, 'orderComplete'])->name('cart.complete');
 Route::middleware('auth:customer')->delete('cart/deleteitem/{id?}', [App\Http\Controllers\CartController::class, 'deleteitem'])->name('cart.deleteitem');
 Route::middleware('auth:customer')->post('cart/payment', [App\Http\Controllers\CartController::class, 'payment'])->name('cart.payment');
+Route::middleware('auth:customer')->get('invoice/{id?}', [App\Http\Controllers\CustomerController::class, 'invoice'])->name('customer.invoice');
+Route::middleware('auth:customer')->get('customer/orders', [App\Http\Controllers\CustomerController::class, 'orders'])->name('customer.orders');
 Route::middleware('auth:customer')->get('customer/address', [App\Http\Controllers\CustomerController::class, 'address'])->name('customer.address');
 Route::middleware('auth:customer')->post('customer/addressadd', [App\Http\Controllers\CustomerController::class, 'addressadd'])->name('customer.addressadd');
 Route::middleware('auth:customer')->get('customer/addresslist', [App\Http\Controllers\CustomerController::class, 'addresslist'])->name('customer.addresslist');

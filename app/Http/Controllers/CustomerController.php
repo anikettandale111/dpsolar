@@ -7,6 +7,8 @@ use App\Helpers\DeviceHelper;
 use App\Models\Customers;
 use App\Models\Address;
 use App\Models\Otp;
+use App\Models\Order;
+use App\Models\OrderProductDetail;
 use DB;
 use Auth;
 use Hash;
@@ -136,7 +138,41 @@ class CustomerController extends Controller
             ->make(true);
           }
     }
+    public function orders(Request $request){
+        if($request->ajax()){
+            $orders = Order::select('oid','order_id','order_status','created_at')->where(['cust_id'=> Auth::guard('customer')->user()->cust_id])->orderBy('oid','desc')->get();
+            return datatables()->of($orders)
+            ->addIndexColumn()
+            ->addColumn('action', function ($row) {
+                $hashedId = DeviceHelper::generateHash(str_replace(config('app.short_name') . '-','',$row->oid));
+                $btn = '<a href="/invoice/'.$hashedId.'" class="btn btn-link">View Invoice</a>';
+                return $btn;
+            })
+            ->addColumn('orderdate', function ($row) {
+                return date('Y-M-d',strtotime($row->created_at));
+            })
+            ->addColumn('orderstatus', function ($row) {
+                if($row->order_status == 'Not Accepted'){
+                    return '<button class="btn btn-secondary"> Not Accepted </button>';
+                }elseif($row->order_status == 'Accepted'){
+                    return '<button class="btn btn-primary"> Accepted </button>';
+                }elseif($row->order_status == 'Delivered'){
+                    return '<button class="btn btn-success"> Delivered </button>';
+                }
+            })
+            ->rawColumns(['action','orderdate','orderstatus'])
+            ->make(true);
+        }else{
+            return view('customer.orderlist');
+        }
+    }
     public function address(Request $request){
         return view('customer.address_model');
+    }
+    public function invoice($invid){
+        $order_id = explode(config('app.id_seperator'), $invid)[0];
+        $order = Order::where('oid', $order_id)->first();
+        $orderProduct = OrderProductDetail::where('order_number', $order->order_id)->get();
+        return view('cart.invoice', compact('order','orderProduct'));
     }
 }
