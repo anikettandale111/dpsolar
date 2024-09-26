@@ -516,7 +516,7 @@
 	}
 	.banner_item
 	{
-		height: calc((100vw - 30px) / 2.6);
+		height: calc((100vw - 30px) / 1.5);
 	}
 	.grid_sorting_button
 	{
@@ -538,6 +538,10 @@
 	.product_name a
 	{
 		font-size: 12px;
+	}
+	.cat_container .product_name a
+	{
+		font-size: 24px;
 	}
 	.add_to_cart_button
 	{

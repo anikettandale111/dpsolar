@@ -138,6 +138,7 @@
             $('.otp_div').show();
             ajaxSent = true;
             hideLoader();
+            alert(response.otp)
           },
           error: function(xhr, status, error) {
             // Handle errors here

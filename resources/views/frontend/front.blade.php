@@ -437,6 +437,9 @@ use App\Helpers\DeviceHelper;
     .red_button {
       top: -20px;
     }
+    .category_image img{
+        height: 100%;
+    }
   </style>
   <script>
     var currency = "{{ config('app.currency') }}";
@@ -503,7 +506,7 @@ use App\Helpers\DeviceHelper;
           <div class="row">
             <div class="col-lg-12 text-right">
               <div class="logo_container">
-                <a href="{{url('')}}">DIgital Power <span>Solutions</span></a>
+                <a href="{{url('')}}">Dream Power <span>Solutions</span></a>
               </div>
               <nav class="navbar">
                 <ul class="navbar_menu">

@@ -921,10 +921,10 @@ section
 	display: block;
 	color: #1e1e27;
 	text-transform: uppercase;
-	font-size: 22px;
-	font-weight: 600;
+	font-size: 18px;
+	font-weight: 500;
 	text-align: center;
-	line-height: 50px;
+	line-height: 25px;
 	width: 100%;
 	-webkit-transition: color 0.3s ease;
 	-moz-transition: color 0.3s ease;
@@ -1351,10 +1351,10 @@ section
 	-ms-transform: translateY(-50%);
 	-o-transform: translateY(-50%);
 	transform: translateY(-50%);
-	z-index: 2;
+	z-index: 9;
 	cursor: pointer;
-	visibility: hidden;
-	opacity: 0;
+	visibility: visible;
+	opacity: 9;
 	-webkit-transition: all 300ms ease;
 	-moz-transition: all 300ms ease;
 	-ms-transition: all 300ms ease;
