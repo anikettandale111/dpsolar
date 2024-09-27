@@ -19,10 +19,9 @@ $grandtot=0.00;
             <div class="row no-gutters">
                 <div class="col-md-12">
                     <div class="product-details">
-                        <table id="example" class="table table-striped" style="width:100%;margin-top:45px;">
+                        <table id="example" class="table table-striped nowrap" style="width:100%;margin-top:45px;">
                             <thead>
                                 <tr>
-                                    <th>Sr.No.</th>
                                     <th>Order</th>
                                     <th>Date</th>
                                     <th>Status</th>
@@ -115,6 +114,8 @@ $grandtot=0.00;
         categoryTable = $('#example').DataTable({
             processing: true,
             serverSide: true,
+            responsive:true,
+            scrollX: true,
             // bPaginate: false,
             bLengthChange: false,
             searching: false,
@@ -122,10 +123,11 @@ $grandtot=0.00;
             // bInfo: false,
             // bAutoWidth: false,
             ajax: APP_URL + "/customer/orders",
-            columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex'
-                },
+            columns: [
+                // {
+                //     data: 'DT_RowIndex',
+                //     name: 'DT_RowIndex'
+                // },
                 {
                     data: 'order_id',
                     name: 'Order ID'

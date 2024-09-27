@@ -1,4 +1,7 @@
 @extends('frontend.front')
+@php
+use App\Helpers\DeviceHelper;
+@endphp
 @section('title', 'Cart Detail')
 @push('styles')
 <!-- External CSS libraries -->
@@ -20,7 +23,10 @@
 
 @section('content')
 <!-- Invoice 6 start -->
-<div class="invoice-6 invoice-content mt-5">
+@if(DeviceHelper::isMobile() == false)
+@else
+@endif
+<div class="invoice-6 invoice-content mt-5 d-flex flex-wrap justify-content-between">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -38,11 +44,9 @@
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="invoice-logo">
-                                        <!-- logo started -->
                                         <div class="logo">
                                             <img src="{{ asset('frontend/images/dps_logo.jpeg')}}" alt="logo">
                                         </div>
-                                        <!-- logo ended -->
                                     </div>
                                 </div>
                                 <div class="col-sm-8">

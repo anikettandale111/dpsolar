@@ -199,7 +199,9 @@ class CartController extends Controller
     public function orderComplete(Request $request)
     {
         $message = ['status' => 'success', 'message' => 'Order Placed successfully.'];
-        return view('cart.invoice', compact('message'));
+        $order = Order::where('cust_id', Auth::guard('customer')->user()->cust_id)->orderBy('oid','DESC')->first();
+        $orderProduct = OrderProductDetail::where('order_number', $order->order_id)->get();
+        return view('cart.invoice', compact('message','order','orderProduct'));
     }
     public function payment(Request $request)
     {

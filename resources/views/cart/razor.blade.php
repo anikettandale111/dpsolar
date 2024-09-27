@@ -35,7 +35,6 @@
                         payment_response: JSON.stringify(response)
                     },
                     success: function(data) {
-                        console.log(data);
                         window.location.href = APP_URL+"/cart/complete";
                     }
                 });
