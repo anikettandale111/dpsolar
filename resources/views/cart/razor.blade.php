@@ -6,16 +6,25 @@
         <div class="col-md-12">
             <div class="d-flex justify-content-center pt-70 pb-70 flex-column align-items-center">
                 <h3>Razor Payment</h3><br>
+                <div id="loader" style="display: none;">
+                    <div class="spinner"></div>
+                    <span>Please wait while we generate your invoice.</span>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 @endsection
 
 @push('scripts')
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
+    function showLoader() {
+      $('#loader').show();
+    }
     $(document).ready(function() {
+        showLoader();
         var APP_URL = $('#app-url').attr("content");
         var options = {
             "key": "{{$razor_key_id}}", // Enter the Key ID generated from the Dashboard

@@ -12,8 +12,7 @@ use App\Helpers\DeviceHelper;
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="app-url" id="app-url" content="{{ url('/') }}">
   <!-- General CSS Files -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-  <!-- <link rel="stylesheet" type="text/css" href="{{ asset('frontend/styles/bootstrap4/bootstrap.min.css')}}"> -->
+  <link rel="stylesheet" type="text/css" href="{{ asset('frontend/styles/bootstrap4/bootstrap.min.css')}}">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.7/css/dataTables.dataTables.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/3.1.1/css/buttons.dataTables.css">
   <link href="{{ asset('frontend/plugins/font-awesome-4.7.0/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
@@ -751,9 +750,8 @@ use App\Helpers\DeviceHelper;
     </footer>
   </div>
   <script src="{{ asset('frontend/js/jquery-3.2.1.min.js')}}"></script>
-  <!-- <script src="{{ asset('frontend/styles/bootstrap4/popper.js')}}"></script>
-  <script src="{{ asset('frontend/styles/bootstrap4/bootstrap.min.js')}}"></script> -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ asset('frontend/styles/bootstrap4/popper.js')}}"></script>
+  <script src="{{ asset('frontend/styles/bootstrap4/bootstrap.min.js')}}"></script>
   <script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
   <script src="https://cdn.datatables.net/buttons/3.1.1/js/dataTables.buttons.js"></script>
   <script src="https://cdn.datatables.net/buttons/3.1.1/js/buttons.dataTables.js"></script>
