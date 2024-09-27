@@ -14,7 +14,7 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Support\Facades\Storage;
-
+use DB;
 
 class ProductController extends Controller
 {
@@ -81,10 +81,21 @@ class ProductController extends Controller
         if (DeviceHelper::verifyHash($id, $hash)) {
             $product = Product::findOrFail($id);
             $reviews = Reviews::where(['product_id' => $id, 'is_delete' => 0, 'is_active' => 1])->get();
+            $rating = Reviews::select(
+                DB::raw('SUM(rating) AS sumrate'),
+                DB::raw('COUNT(user_id) AS usercount')
+            )
+            ->where(['product_id' => $id, 'is_delete' => 0, 'is_active' => 1])
+            ->first();
+            $ratingcount = 0;
+            if(isset($rating->usercount) && $rating->usercount > 0){
+                $ratingcount = round($rating->sumrate/$rating->usercount);
+            }
             return view('products.show', [
                 'product' => $product,
                 'hide_main_css' => $hide_main_css,
-                'reviews' => $reviews
+                'reviews' => $reviews,
+                'ratingcount' => $ratingcount,
             ]);
         } else {
             return abort(404); // or handle the error as needed

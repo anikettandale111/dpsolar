@@ -15,8 +15,22 @@ use App\Helpers\DeviceHelper;
 <!-- Custom Stylesheet -->
 <link rel="stylesheet" type="text/css" href="{{ asset('frontend/css/invoice.css')}}">
 <style>
-    .showlarge:hover{
+    .showlarge:hover {
         transform: scale(5.5);
+    }
+
+    @media print {
+
+        /* Hide the header and footer when printing */
+        header,
+        footer {
+            display: none !important;
+        }
+
+        /* Optional: Hide other elements you don't want to print */
+        .no-print {
+            display: none !important;
+        }
     }
 </style>
 @endpush
@@ -30,14 +44,14 @@ use App\Helpers\DeviceHelper;
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-            <div class="invoice-btn-section clearfix d-print-none">
-                        <a href="javascript:window.print()" class="btn btn-lg btn-print">
-                            <i class="fa fa-print"></i> Print Invoice
-                        </a>
-                        <a id="invoice_download_btn" class="btn btn-lg btn-download btn-theme">
-                            <i class="fa fa-download"></i> Download Invoice
-                        </a>
-                    </div>
+                <div class="invoice-btn-section clearfix d-print-none">
+                    <a href="javascript:window.print()" class="btn btn-lg btn-print">
+                        <i class="fa fa-print"></i> Print Invoice
+                    </a>
+                    <a id="invoice_download_btn" class="btn btn-lg btn-download btn-theme">
+                        <i class="fa fa-download"></i> Download Invoice
+                    </a>
+                </div>
                 <div class="invoice-inner clearfix">
                     <div class="invoice-info clearfix" id="invoice_wrapper">
                         <div class="invoice-headar">
@@ -95,14 +109,14 @@ use App\Helpers\DeviceHelper;
                                             <h3 class="inv-title-1 mb-10">Order Status</h3>
                                             <ul class="payment-method-list-1 text-14">
                                                 @php
-                                                if($order->order_status == 'Not Accepted'){
-                                                    $btnclass ='btn btn-secondary';
+                                                if($order->order_status == 'Pending'){
+                                                $btnclass ='btn btn-secondary';
                                                 }elseif($order->order_status == 'Accepted'){
-                                                    $btnclass ='btn btn-primary';
+                                                $btnclass ='btn btn-primary';
                                                 }elseif($order->order_status == 'Delivered'){
-                                                    $btnclass ='btn btn-success';
+                                                $btnclass ='btn btn-success';
                                                 }
-                                                @endphp 
+                                                @endphp
                                                 <li style="text-transform: uppercase;" class="{{$btnclass}}"> {{$order->order_status}}</li>
                                             </ul>
                                         </div>

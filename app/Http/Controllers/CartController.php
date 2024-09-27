@@ -137,7 +137,7 @@ class CartController extends Controller
         $data['discount'] = '0';
         $data['payment_type'] = $request->payment_method;
         $data['payment_status'] = 'Unpaid';
-        $data['order_status'] = 'Not Accepted';
+        $data['order_status'] = 'Pending';
         $data['remark'] = 'NA';
 
         $fieldsToUpdate = [];

@@ -58,6 +58,13 @@
             },
             "theme": {
                 "color": "#F37254"
+            },
+            "modal": {
+                "ondismiss": function(){
+                    // Handle modal close event (user canceled the payment)
+                    window.location.href = APP_URL+"/cart";
+                    // You can perform actions like redirecting the user or showing a custom message
+                }
             }
         };
         var rzp1 = new Razorpay(options);
