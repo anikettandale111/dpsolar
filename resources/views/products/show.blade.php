@@ -161,19 +161,22 @@ use App\Helpers\DeviceHelper;
     </div>
 </div>
 <!-- reviews start -->
-@if(isset($reviews) && count($reviews))
 <div class="container">
     <h4 style="text-align: center;color: red;text-decoration: underline;">Reviews</h4>
     <div class="row">
         <!-- Add Review -->
-        @if (isset(Auth::guard('customer')->user()->cust_id) && Auth::guard('customer')->user()->cust_id > 0)
         <div class="col-lg-6 add_review_col">
             <div class="add_review">
                 <form id="review_form" action="post">
                     <div>
+                        @if (isset(Auth::guard('customer')->user()->cust_id) && Auth::guard('customer')->user()->cust_id > 0)
                         <!-- <h1>Add Review</h1> -->
                         <input id="review_name" class="form_input input_name" type="hidden" name="name" placeholder="Name*" required="required" data-error="Name is required." value="{{(isset(Auth::guard('customer')->user()->first_name)) ? Auth::guard('customer')->user()->first_name.' '.Auth::guard('customer')->user()->last_name : '' }}">
-                        <input id="review_email" class="form_input input_email" type="hidden" name="email" placeholder="Email*" required="required" data-error="Valid email is required." value="{{(isset(Auth::guard('customer')->user()->email)) ? Auth::guard('customer')->user()->email : '' }}">
+                        <input id="review_email" class="form_input input_email" type="hidden" name="email" id="email" placeholder="Email*" required="required" data-error="Valid email is required." value="{{(isset(Auth::guard('customer')->user()->email)) ? Auth::guard('customer')->user()->email : '' }}">
+                        @else
+                        <input id="review_name" class="form_input input_name" type="text" name="name" placeholder="Name*" required="required" data-error="Name is required.">
+                        <input id="review_email" class="form_input input_email" type="text" name="email" id="email" placeholder="Email*" required="required" data-error="Valid email is required.">
+                        @endif
                     </div>
                     <div>
                         <h1>Your Rating:</h1>
@@ -192,9 +195,9 @@ use App\Helpers\DeviceHelper;
                 </form>
             </div>
         </div>
-        @endif
         <!-- reviews end -->
         <!-- User Reviews -->
+        @if(isset($reviews) && count($reviews))
         <div class="col-lg-6 reviews_col">
             <!-- User Review -->
             @foreach($reviews AS $key => $rev)
@@ -220,21 +223,35 @@ use App\Helpers\DeviceHelper;
             </div>
             @endforeach
         </div>
+        @endif
     </div>
     <!-- User Review -->
 </div>
-@endif
 @endsection
 @push('scripts')
 <script src="{{ asset('frontend/js/single_custom.js') }}"></script>
 <script>
+    function isValidEmail(email) {
+        var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        return emailPattern.test(email);
+    }
     $(document).ready(function() {
         var APP_URL = $('#app-url').attr("content");
         $('#review_submit').click(function(e) {
             e.preventDefault(); // Prevent the default form submission
+            var name = $('#review_name').val().trim();
+            var email = $('#review_email').val().trim();
             var pid = $('#quantity_value').attr('data-pid');
             var review_message = $('#review_message').val().trim();
             var star_rating = $(".user_star_rating li i.fa-star").length;
+            if (name == '') {
+                toastr.error('User Name is Required');
+                return false;
+            }
+            if (isValidEmail(email)) {} else {
+                toastr.error('Email Name is Required');
+                return false;
+            }
             if (review_message == '') {
                 toastr.error('Enter review Text');
                 return false;
@@ -252,6 +269,7 @@ use App\Helpers\DeviceHelper;
                     'product': pid,
                     'review_message': review_message,
                     'star_rating': star_rating,
+                    'review_name': name
                 },
                 type: 'post',
                 dataType: 'json',

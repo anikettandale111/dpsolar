@@ -24,7 +24,7 @@ class CustomerController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:customer')->except(['getotp', 'verifyotp']);
+        $this->middleware('auth:customer')->except(['getotp', 'verifyotp','reviewsubmit']);
     }
 
     /**
@@ -171,8 +171,13 @@ class CustomerController extends Controller
         return view('customer.address_model');
     }
     public function reviewsubmit(Request $request){
-        $input['user_id'] = Auth::guard('customer')->user()->cust_id;
-        $input['user_name'] = Auth::guard('customer')->user()->first_name.' '.Auth::guard('customer')->user()->last_name;
+        if(isset(Auth::guard('customer')->user()->cust_id) && Auth::guard('customer')->user()->cust_id){
+            $input['user_id'] = Auth::guard('customer')->user()->cust_id;
+            $input['user_name'] = Auth::guard('customer')->user()->first_name.' '.Auth::guard('customer')->user()->last_name;
+        }else{
+            $input['user_id'] = 2;
+            $input['user_name'] = $request->review_name;
+        }
         $input['product_id'] = explode(config('app.id_seperator'), $request->product)[0];
         $input['description'] = $request->review_message;
         $input['rating'] = $request->star_rating;
