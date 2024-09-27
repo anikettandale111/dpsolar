@@ -233,11 +233,11 @@
 	}
 	.tab_text_block
 	{
-		margin-bottom: 113px;
+		margin-bottom: 10px;
 	}
 	.tab_image
 	{
-		margin-bottom: 111px;
+		margin-bottom: 30px;
 	}
 	.single_product_image
 	{
@@ -263,6 +263,9 @@
 	{
 		width: 75px;
 		height: 75px;
+	}
+	.tabs{
+		flex-direction: row !important;
 	}
 }
 
@@ -350,7 +353,7 @@
 	}
 	.add_review
 	{
-		margin-top: 44px;
+		margin-top: 25px;
 	}
 	.user_rating .star_rating
 	{

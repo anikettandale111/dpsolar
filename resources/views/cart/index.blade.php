@@ -104,17 +104,20 @@ $grandtot=0.00;
                         <div class="d-flex justify-content-between align-items-center"><span>Checkout Details</span>
                             <!-- <img class="rounded" src="https://i.imgur.com/WU501C8.jpg" width="30"> -->
                         </div>
-                        <form action="{{url('cart/checkout')}}" method="POST" id="checksubform">
+                        @php
+                        $redirecturl = (isset(Auth::guard('customer')->user()->cust_id) && Auth::guard('customer')->user()->cust_id > 0) ? 'cart/checkout':'login';
+                        @endphp
+                        <form action="{{url($redirecturl)}}" method="POST" id="checksubform">
                             @csrf
                             <label class="credit-card-label">Payment Method</label><br>
                             <input class="form-check-input ml-3" type="radio" name="payment_method" id="upi" value="UPI" checked required>
                             <label class="form-check-label ml-3" for="upi">Online</label><br>
                             <input class="form-check-input ml-3" type="radio" name="payment_method" id="cod" value="COD" required>
                             <label class="form-check-label ml-3" for="cod">Cash on Delivery (COD)</label>
+                            @if(isset(Auth::guard('customer')->user()->cust_id) && Auth::guard('customer')->user()->cust_id > 0)
                             <label class="credit-card-label">Select Delivery Address</label>
                             <select class="form-control" id="delivery_address" name="delivery_address" required>
                                 <option selected disabled class="">Select Delivery Address</option>
-                                @if(isset(Auth::guard('customer')->user()->cust_id) && Auth::guard('customer')->user()->cust_id > 0)
                                 @if(isset($address) && count($address))
                                 @foreach($address AS $key => $add)
                                 @php
@@ -123,9 +126,9 @@ $grandtot=0.00;
                                 <option value="{{$hashedId}}">{{$add['address_one'].' '.$add['address_two'].' '.$add['address_three']}}{{$add['city'].' '.$add['state'].' '.$add['pincode']}}</option>
                                 @endforeach
                                 @endif
-                                @endif
                             </select>
                             <a class="credit-card-label pull-right" style="color:white" href="{{url('customer/address')}}"><u>Manage Address</u></a>
+                            @endif
                             <br>
                             <br>
                             <!-- <hr class="line"> -->

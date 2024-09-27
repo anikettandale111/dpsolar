@@ -36,6 +36,7 @@ Route::middleware('auth:customer')->get('cart/complete', [App\Http\Controllers\C
 Route::middleware('auth:customer')->delete('cart/deleteitem/{id?}', [App\Http\Controllers\CartController::class, 'deleteitem'])->name('cart.deleteitem');
 Route::middleware('auth:customer')->post('cart/payment', [App\Http\Controllers\CartController::class, 'payment'])->name('cart.payment');
 Route::middleware('auth:customer')->get('invoice/{id?}', [App\Http\Controllers\CustomerController::class, 'invoice'])->name('customer.invoice');
+Route::middleware('auth:customer')->post('reviewsubmit', [App\Http\Controllers\CustomerController::class, 'reviewsubmit'])->name('reviewsubmit');
 Route::middleware('auth:customer')->get('customer/orders', [App\Http\Controllers\CustomerController::class, 'orders'])->name('customer.orders');
 Route::middleware('auth:customer')->get('customer/address', [App\Http\Controllers\CustomerController::class, 'address'])->name('customer.address');
 Route::middleware('auth:customer')->post('customer/addressadd', [App\Http\Controllers\CustomerController::class, 'addressadd'])->name('customer.addressadd');
@@ -48,6 +49,7 @@ Route::get('verifyotp', [App\Http\Controllers\CustomerController::class, 'verify
 
 Route::get('/contact', [App\Http\Controllers\HomeController::class, 'contact'])->name('contact');
 Route::get('/productlist', [App\Http\Controllers\ProductController::class, 'productlist'])->name('productlist');
+Route::get('/category/{id?}', [App\Http\Controllers\ProductController::class, 'productlist'])->name('category');
 Route::get('/categorylist', [App\Http\Controllers\CategoryController::class, 'categorylist'])->name('categorylist');
 
 Auth::routes();

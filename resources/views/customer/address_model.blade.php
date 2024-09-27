@@ -20,7 +20,7 @@ $grandtot=0.00;
                 <div class="col-md-12">
                     <div class="product-details">
                         <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#exampleModalCenter">Add Address</button>
-                        <table id="example" class="table table-striped" style="width:100%;margin-top:45px;">
+                        <table id="example" class="table table-striped nowrap" style="width:100%;margin-top:45px;">
                             <thead>
                                 <tr>
                                     <th>Sr.No.</th>
@@ -114,6 +114,8 @@ $grandtot=0.00;
         categoryTable = $('#example').DataTable({
             processing: true,
             serverSide: true,
+            responsive:true,
+            scrollX: true,
             // bPaginate: false,
             bLengthChange: false,
             searching: false,

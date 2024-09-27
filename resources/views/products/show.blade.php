@@ -62,11 +62,13 @@ use App\Helpers\DeviceHelper;
                 <div class="original_price">{{config('app.currency')}} {{$product->display_price}}</div>
                 <div class="product_price">{{config('app.currency')}} {{$product->selling_price}}</div>
                 <ul class="star_rating">
-                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                    <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                    @for($i=0;$i < 5;$i++ )
+                        @if($i < $ratingcount)
+                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                        @else
+                        <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                        @endif
+                        @endfor
                 </ul>
                 <!-- <div class="product_color">
 						<span>Select Color:</span>
@@ -76,9 +78,9 @@ use App\Helpers\DeviceHelper;
 							<li style="background: #60b3f3"></li>
 						</ul>
 					</div> -->
-                    @php
-                        $hashedId = App\Helpers\DeviceHelper::generateHash($product->pid);
-                    @endphp
+                @php
+                $hashedId = App\Helpers\DeviceHelper::generateHash($product->pid);
+                @endphp
                 <div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
                     <span>Quantity:</span>
                     <div class="quantity_selector">
@@ -98,27 +100,22 @@ use App\Helpers\DeviceHelper;
         <div class="row">
             <div class="col">
                 <div class="tabs_container">
-                    <ul class="tabs d-flex flex-sm-row flex-column align-items-left align-items-md-center justify-content-center">
+                    <ul class="tabs d-flex flex-sm-row  align-items-left align-items-md-center justify-content-center">
                         <li class="tab active" data-active-tab="tab_1"><span>Description</span></li>
                         <li class="tab" data-active-tab="tab_2"><span>Additional Information</span></li>
-                        @if(isset($reviews) && count($reviews))
-                            <li class="tab" data-active-tab="tab_3"><span>Reviews (2)</span></li>
-                        @endif
                     </ul>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col">
-
                 <!-- Tab Description -->
-
                 <div id="tab_1" class="tab_container active">
                     <div class="row">
                         <div class="col-lg-5 desc_col">
-                            <div class="tab_title">
+                            <!-- <div class="tab_title">
                                 <h4>Description</h4>
-                            </div>
+                            </div> -->
                             <div class="tab_text_block">
                                 <h2>Pocket cotton sweatshirt</h2>
                                 <p>Nam tempus turpis at metus scelerisque placerat nulla deumantos solicitud felis. Pellentesque diam dolor, elementum etos lobortis des mollis ut...</p>
@@ -145,15 +142,13 @@ use App\Helpers\DeviceHelper;
                         </div>
                     </div>
                 </div>
-
                 <!-- Tab Additional Info -->
-
                 <div id="tab_2" class="tab_container">
                     <div class="row">
                         <div class="col additional_info_col">
-                            <div class="tab_title additional_info_title">
+                            <!-- <div class="tab_title additional_info_title">
                                 <h4>Additional Information</h4>
-                            </div>
+                            </div> -->
                             <p>COLOR:<span>{{$product->color}}</span></p>
                             <p>SIZE:<span>{{$product->size}}</span></p>
                             <p>WEIGHT:<span>{{$product->weight}}</span></p>
@@ -161,83 +156,110 @@ use App\Helpers\DeviceHelper;
                         </div>
                     </div>
                 </div>
-
-                <!-- reviews start -->
-                @if(isset($reviews) && count($reviews))
-                <div id="tab_3" class="tab_container">
-                    <div class="row">
-
-                        <!-- User Reviews -->
-
-                        <div class="col-lg-6 reviews_col">
-                            <div class="tab_title reviews_title">
-                                <h4>Reviews ({{count($reviews)}})</h4>
-                            </div>
-                            <!-- User Review -->
-                            @foreach($reviews AS $key => $rev)
-                            <div class="user_review_container d-flex flex-column flex-sm-row">
-                                <div class="user">
-                                    <div class="user_pic"></div>
-                                    <div class="user_rating">
-                                        <ul class="star_rating">
-                                            @for($i=0;$i < 5 ;$i++ )
-                                                @if($i < $rev->rating)
-                                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                                @else
-                                                    <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
-                                                @endif
-                                            @endfor
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="review">
-                                    <div class="review_date">{{date('d M Y', strtotime($rev->created_at))}}</div>
-                                    <div class="user_name">{{$rev->user_name}}</div>
-                                    <p>{{$rev->description}}</p>
-                                </div>
-                            </div>
-                            @endforeach
-                            <!-- User Review -->
-                        </div>
-
-                        <!-- Add Review -->
-
-                        <div class="col-lg-6 add_review_col">
-
-                            <div class="add_review">
-                                <form id="review_form" action="post">
-                                    <div>
-                                        <h1>Add Review</h1>
-                                        <input id="review_name" class="form_input input_name" type="text" name="name" placeholder="Name*" required="required" data-error="Name is required.">
-                                        <input id="review_email" class="form_input input_email" type="email" name="email" placeholder="Email*" required="required" data-error="Valid email is required.">
-                                    </div>
-                                    <div>
-                                        <h1>Your Rating:</h1>
-                                        <ul class="user_star_rating">
-                                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                            <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
-                                        </ul>
-                                        <textarea id="review_message" class="input_review" name="message" placeholder="Your Review" rows="4" required="" data-error="Please, leave us a review."></textarea>
-                                    </div>
-                                    <div class="text-left text-sm-right">
-                                        <button id="review_submit" type="submit" class="red_button review_submit_btn trans_300" value="Submit">submit</button>
-                                    </div>
-                                </form>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-                @endif <!-- reviews end -->
             </div>
         </div>
     </div>
 </div>
+<!-- reviews start -->
+@if(isset($reviews) && count($reviews))
+<div class="container">
+    <h4 style="text-align: center;color: red;text-decoration: underline;">Reviews</h4>
+    <div class="row">
+        <!-- Add Review -->
+        @if (isset(Auth::guard('customer')->user()->cust_id) && Auth::guard('customer')->user()->cust_id > 0)
+        <div class="col-lg-6 add_review_col">
+            <div class="add_review">
+                <form id="review_form" action="post">
+                    <div>
+                        <!-- <h1>Add Review</h1> -->
+                        <input id="review_name" class="form_input input_name" type="hidden" name="name" placeholder="Name*" required="required" data-error="Name is required." value="{{(isset(Auth::guard('customer')->user()->first_name)) ? Auth::guard('customer')->user()->first_name.' '.Auth::guard('customer')->user()->last_name : '' }}">
+                        <input id="review_email" class="form_input input_email" type="hidden" name="email" placeholder="Email*" required="required" data-error="Valid email is required." value="{{(isset(Auth::guard('customer')->user()->email)) ? Auth::guard('customer')->user()->email : '' }}">
+                    </div>
+                    <div>
+                        <h1>Your Rating:</h1>
+                        <ul class="user_star_rating">
+                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                            <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                        </ul>
+                        <textarea id="review_message" class="input_review" name="message" placeholder="Your Review" rows="4" required="" data-error="Please, leave us a review."></textarea>
+                    </div>
+                    <div class="text-left text-sm-right">
+                        <button id="review_submit" type="button" class="red_button review_submit_btn trans_300" value="Submit">submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        @endif
+        <!-- reviews end -->
+        <!-- User Reviews -->
+        <div class="col-lg-6 reviews_col">
+            <!-- User Review -->
+            @foreach($reviews AS $key => $rev)
+            <div class=" d-flex flex-column flex-sm-row">
+                <div class="user">
+                    <div class="user_rating">
+                        <ul class="star_rating">
+                            @for($i=0;$i < 5 ;$i++ )
+                                @if($i < $rev->rating)
+                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                @else
+                                <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                @endif
+                                @endfor
+                        </ul>
+                    </div>
+                </div>
+                <div class="review">
+                    <div class="review_date">{{date('d M Y', strtotime($rev->created_at))}}</div>
+                    <div class="">{{$rev->user_name}}</div>
+                    <p>{{$rev->description}}</p>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+    <!-- User Review -->
+</div>
+@endif
 @endsection
 @push('scripts')
 <script src="{{ asset('frontend/js/single_custom.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        var APP_URL = $('#app-url').attr("content");
+        $('#review_submit').click(function(e) {
+            e.preventDefault(); // Prevent the default form submission
+            var pid = $('#quantity_value').attr('data-pid');
+            var review_message = $('#review_message').val().trim();
+            var star_rating = $(".user_star_rating li i.fa-star").length;
+            if (review_message == '') {
+                toastr.error('Enter review Text');
+                return false;
+            }
+            if (star_rating == '') {
+                toastr.error('Select Start Rating');
+                return false;
+            }
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: APP_URL + "/reviewsubmit",
+                data: {
+                    'product': pid,
+                    'review_message': review_message,
+                    'star_rating': star_rating,
+                },
+                type: 'post',
+                dataType: 'json',
+                success: function(response) {
+                    toastr.success(response.message);
+                }
+            });
+        });
+    });
+</script>
 @endpush

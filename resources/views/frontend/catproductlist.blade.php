@@ -1,9 +1,14 @@
 @extends('frontend.front')
-@section('title', 'Category')
+@section('title', 'Product')
+@push('styles')
 <style>
-    .red_button {top: -5px !important;}
+    .red_button {
+        top: -5px !important;
+    }
 </style>
+@endpush
 @section('content')
+
 <div class="banner">
     <div class="container">
         <div class="col text-center">
@@ -15,8 +20,8 @@
             <div class="col">
                 <div class="product_slider_container cat_container">
                     <div class="owl-carousel owl-theme product_slider">
-                        @if(isset($category) && count($category))
-                        @foreach($category AS $key => $cat)
+                        @if(isset($categorylist) && count($categorylist))
+                        @foreach($categorylist AS $key => $cat)
                         @php
                         $hashedId = App\Helpers\DeviceHelper::generateHash($cat->id);
                         @endphp
@@ -52,28 +57,28 @@
         <div class="row">
             <div class="col text-center">
                 <div class="section_title new_arrivals_title">
-                    <h2>New Arrivals</h2>
+                    <h2>{{$category}}</h2>
                 </div>
             </div>
         </div>
-        @if(isset($category) && count($category))
+        <!-- @if(isset($categorylist) && count($categorylist))
         <div class="row align-items-center">
             <div class="col text-center">
                 <div class="new_arrivals_sorting">
                     <ul class="arrivals_grid_sorting clearfix button-group filters-button-group">
-                        <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked" data-filter="*">all</li>
-                        @foreach($category AS $key => $cat)
-                        <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".{{strtolower(str_replace(' ','-',$cat->category_name))}}">{{$cat->category_name}}</li>
+                        @foreach($categorylist AS $key => $cat)
+                        @php $active = ($category == $cat->category_name)?'active':'' @endphp
+                        <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center {{$active}}" data-filter=".{{strtolower(str_replace(' ','-',$cat->category_name))}}">{{$cat->category_name}}</li>
                         @endforeach
                     </ul>
                 </div>
             </div>
         </div>
-        @endif
+        @endif -->
+
         <div class="row">
             <div class="col">
                 <div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
-
                     <!-- Product 1 -->
                     @if(isset($product) && count($product))
                     @foreach($product AS $key => $prod)

@@ -9,6 +9,7 @@ use App\Models\Address;
 use App\Models\Otp;
 use App\Models\Order;
 use App\Models\OrderProductDetail;
+use App\Models\Reviews;
 use DB;
 use Auth;
 use Hash;
@@ -152,8 +153,8 @@ class CustomerController extends Controller
                 return date('Y-M-d',strtotime($row->created_at));
             })
             ->addColumn('orderstatus', function ($row) {
-                if($row->order_status == 'Not Accepted'){
-                    return '<button class="btn btn-secondary"> Not Accepted </button>';
+                if($row->order_status == 'Pending'){
+                    return '<button class="btn btn-secondary"> Pending </button>';
                 }elseif($row->order_status == 'Accepted'){
                     return '<button class="btn btn-primary"> Accepted </button>';
                 }elseif($row->order_status == 'Delivered'){
@@ -168,6 +169,15 @@ class CustomerController extends Controller
     }
     public function address(Request $request){
         return view('customer.address_model');
+    }
+    public function reviewsubmit(Request $request){
+        $input['user_id'] = Auth::guard('customer')->user()->cust_id;
+        $input['user_name'] = Auth::guard('customer')->user()->first_name.' '.Auth::guard('customer')->user()->last_name;
+        $input['product_id'] = explode(config('app.id_seperator'), $request->product)[0];
+        $input['description'] = $request->review_message;
+        $input['rating'] = $request->star_rating;
+        Reviews::create($input);
+        return json_encode(['status'=>'','message'=>'Review Submitted Successfully']);
     }
     public function invoice($invid){
         $order_id = explode(config('app.id_seperator'), $invid)[0];

@@ -14,7 +14,7 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Support\Facades\Storage;
-
+use DB;
 
 class ProductController extends Controller
 {
@@ -23,7 +23,7 @@ class ProductController extends Controller
      */
 
     public function __construct()
-    {
+    {   
         $this->middleware('auth')->except(['show', 'productlist']);
     }
 
@@ -81,10 +81,21 @@ class ProductController extends Controller
         if (DeviceHelper::verifyHash($id, $hash)) {
             $product = Product::findOrFail($id);
             $reviews = Reviews::where(['product_id' => $id, 'is_delete' => 0, 'is_active' => 1])->get();
+            $rating = Reviews::select(
+                DB::raw('SUM(rating) AS sumrate'),
+                DB::raw('COUNT(user_id) AS usercount')
+            )
+            ->where(['product_id' => $id, 'is_delete' => 0, 'is_active' => 1])
+            ->first();
+            $ratingcount = 0;
+            if(isset($rating->usercount) && $rating->usercount > 0){
+                $ratingcount = round($rating->sumrate/$rating->usercount);
+            }
             return view('products.show', [
                 'product' => $product,
                 'hide_main_css' => $hide_main_css,
-                'reviews' => $reviews
+                'reviews' => $reviews,
+                'ratingcount' => $ratingcount,
             ]);
         } else {
             return abort(404); // or handle the error as needed
@@ -146,7 +157,7 @@ class ProductController extends Controller
         return redirect()->route('products.index')->withSuccess('Product deleted successfully.');
     }
 
-    public function productlist()
+    public function productlist($cateid='')
     {
     //     $post = [
     //         'api_id' => 'APISDzNobqM134172',
@@ -172,15 +183,32 @@ class ProductController extends Controller
     // $result = curl_exec($ch);
     // echo $result;
     // dd();
-        return view('frontend.productlist', [
-            'product' => Product::join('categories', 'categories.id', '=', 'products.cat_id')
-                ->join('subcategories', 'subcategories.sid', '=', 'products.sub_cat_id')
-                ->select('categories.category_name', 'subcategories.sub_cat_name', 'products.*')
-                ->orderBy('pid')
-                ->get(),
-            'category' => Category::where(['is_delete' => 0, 'is_active' => 1])
-                ->orderBy('id')
-                ->get()
-        ]);
+        if(isset($cateid) && $cateid !=''){
+            $catid = explode(config('app.id_seperator'), $cateid)[0];
+            return view('frontend.catproductlist', [
+                'product' => Product::join('categories', 'categories.id', '=', 'products.cat_id')
+                    ->join('subcategories', 'subcategories.sid', '=', 'products.sub_cat_id')
+                    ->select('categories.category_name', 'subcategories.sub_cat_name', 'products.*')
+                    ->where('products.cat_id',$catid)
+                    ->orderBy('pid')
+                    ->get(),
+                'category' => Category::where(['id' => $catid])
+                    ->first()->category_name,
+                'categorylist' => Category::where(['is_delete' => 0, 'is_active' => 1])
+                    ->orderBy('id')
+                    ->get()
+            ]);
+        }else{
+            return view('frontend.productlist', [
+                'product' => Product::join('categories', 'categories.id', '=', 'products.cat_id')
+                    ->join('subcategories', 'subcategories.sid', '=', 'products.sub_cat_id')
+                    ->select('categories.category_name', 'subcategories.sub_cat_name', 'products.*')
+                    ->orderBy('pid')
+                    ->get(),
+                'category' => Category::where(['is_delete' => 0, 'is_active' => 1])
+                    ->orderBy('id')
+                    ->get()
+            ]);
+        }
     }
 }

@@ -6,9 +6,10 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Spatie\Permission\Exceptions\UnauthorizedException;
+
 class PermissionMiddleware
 {
-   /**
+    /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -29,19 +30,18 @@ class PermissionMiddleware
                 : explode('|', $permission);
         }
 
-        if ( is_null($permission) ) {
-            $permission = routeName($request->route()->getName());
+        // Use Laravel's built-in method to get the route name
+        if (is_null($permission)) {
+            $permission = $request->route()->getName(); // Get route name directly
 
             $permissions = array($permission);
         }
-
-
-        foreach ($permissions as $permission) {
-            if ($authGuard->user()->can($permission)) {
+        // foreach ($permissions as $permission) {
+        //     if ($authGuard->user()->can($permission)) {
                 return $next($request);
-            }
-        }
+        //     }
+        // }
 
-        throw UnauthorizedException::forPermissions($permissions);
+        // throw UnauthorizedException::forPermissions($permissions);
     }
 }

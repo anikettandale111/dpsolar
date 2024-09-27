@@ -1149,7 +1149,7 @@ section
 .tabs_section_container
 {
 	width: 100%;
-	padding-bottom: 80px;
+	padding-bottom: 30px;
 	border-bottom: solid 1px #ebebeb;
 }
 .tabs_container
@@ -1266,7 +1266,7 @@ section
 }
 .reviews_col
 {
-	padding-right: 30px;
+	padding-left: 10%;
 }
 .user_pic
 {
@@ -1314,11 +1314,11 @@ section
 
 .add_review
 {
-	margin-top: 94px;
+	margin-top: 35px;
 }
 #review_form > div
 {
-	margin-bottom: 40px;
+	/* margin-bottom: 40px; */
 }
 #review_form div:nth-child(2) h1
 {

@@ -30,7 +30,7 @@ class OrdersController extends Controller
     {
         return view('orders.received', [
             'orderlist' => Order::join('customers', 'customers.cust_id', '=', 'tbl_order.cust_id')
-            ->whereIn('tbl_order.order_status',['Not Accepted'])
+            ->whereIn('tbl_order.order_status',['Pending'])
             ->select('customers.first_name','customers.last_name','customers.mobile_num', 'tbl_order.order_id', 'tbl_order.delivery_address', 'tbl_order.payment_type', 'tbl_order.product_count', 'tbl_order.payment_amount', 'tbl_order.oid', 'tbl_order.payment_status','tbl_order.created_at')
             ->orderBy('tbl_order.oid')->get()
         ]);
